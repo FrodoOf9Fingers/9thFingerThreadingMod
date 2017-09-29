@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ModMetaData>
+  <name>9thFingerThreadingMod</name>
+  <author>FrodoOf9Fingers</author>
+  <url></url>
+  <targetVersion>0.17.1557</targetVersion>
+  <description>An attempt to introduce multi threading into the game </description>
+</ModMetaData>

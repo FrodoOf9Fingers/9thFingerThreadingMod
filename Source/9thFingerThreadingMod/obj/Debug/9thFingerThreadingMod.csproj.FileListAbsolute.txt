@@ -1,0 +1,8 @@
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\9thFingerThreadMod\Source\9thFingerThreadingMod\bin\Debug\9thFingerThreadingMod.dll
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\9thFingerThreadMod\Source\9thFingerThreadingMod\bin\Debug\9thFingerThreadingMod.pdb
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\9thFingerThreadMod\Source\9thFingerThreadingMod\bin\Debug\System.Threading.dll
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\9thFingerThreadMod\Source\9thFingerThreadingMod\bin\Debug\System.Threading.xml
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\9thFingerThreadMod\Assemblies\9thFingerThreadingMod.dll
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\9thFingerThreadMod\Source\9thFingerThreadingMod\obj\Debug\9thFingerThreadingMod.csproj.CoreCompileInputs.cache
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\9thFingerThreadMod\Source\9thFingerThreadingMod\obj\Debug\9thFingerThreadingMod.dll
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\9thFingerThreadMod\Source\9thFingerThreadingMod\obj\Debug\9thFingerThreadingMod.csprojResolveAssemblyReference.cache
