@@ -3,21 +3,17 @@ using Harmony;
 using Harmony.ILCopying;
 using HugsLib;
 using RimWorld;
-using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Threading.Tasks;
-using UnityEngine;
 using Verse;
-using Verse.AI;
 
 namespace _9thFingerThreadingMod
 {
     public class ThreadingMod : ModBase
     {
         public const int NUM_THREADS_PER_MAP = 8;
-
         public override string ModIdentifier => "threadingmod";
         ThreadingMod()
         {
@@ -30,6 +26,7 @@ namespace _9thFingerThreadingMod
             Log.Message("Thread Mod Function Replacement Started");
             FunctionReplacer.ReplacePathfinderFunctions();
             FunctionReplacer.ReplaceReachabilityFunctions();
+            FunctionReplacer.ReplaceListerThings();
             Memory.WriteJump(Memory.GetMethodStart(typeof(RCellFinder).GetMethod("RandomWanderDestFor")),
                     Memory.GetMethodStart(typeof(RCellFinderFuncionHolder).GetMethod("newRandomWanderDestFor")));
 

@@ -1,4 +1,5 @@
 ﻿using _9thFingerThreadingMod.Replacement_Functions;
+using _9thFingerThreadingMod.Replacement_Objects;
 using Harmony.ILCopying;
 using System;
 using Verse;
@@ -8,6 +9,32 @@ namespace _9thFingerThreadingMod
 {
     static class FunctionReplacer
     {
+        public static void ReplaceListerThings()
+        {
+            Memory.WriteJump(Memory.GetMethodStart(typeof(ListerThings).GetMethod("EverListable", new Type[] { typeof(ThingDef), typeof(ListerThingsUse) })),
+                      Memory.GetMethodStart(typeof(ListerThingsFunctionHolder).GetMethod("hijackEverListable")));
+
+            Memory.WriteJump(Memory.GetMethodStart(typeof(ListerThings).GetMethod("Remove", new Type[] { typeof(Thing) })),
+                 Memory.GetMethodStart(typeof(ListerThingsFunctionHolder).GetMethod("hijackRemove")));
+
+            Memory.WriteJump(Memory.GetMethodStart(typeof(ListerThings).GetMethod("Add", new Type[] { typeof(Thing) })),
+     Memory.GetMethodStart(typeof(ListerThingsFunctionHolder).GetMethod("hijackAdd")));
+
+            Memory.WriteJump(Memory.GetMethodStart(typeof(ListerThings).GetMethod("Contains", new Type[] { typeof(Thing) })),
+     Memory.GetMethodStart(typeof(ListerThingsFunctionHolder).GetMethod("hijackContains")));
+
+            Memory.WriteJump(Memory.GetMethodStart(typeof(ListerThings).GetMethod("ThingsMatching", new Type[] { typeof(ThingRequest) })),
+     Memory.GetMethodStart(typeof(ListerThingsFunctionHolder).GetMethod("hijackThingsMatching")));
+
+            Memory.WriteJump(Memory.GetMethodStart(typeof(ListerThings).GetMethod("ThingsOfDef", new Type[] { typeof(ThingDef) })),
+     Memory.GetMethodStart(typeof(ListerThingsFunctionHolder).GetMethod("hijackThingsOfDef")));
+
+            Memory.WriteJump(Memory.GetMethodStart(typeof(ListerThings).GetMethod("ThingsInGroup", new Type[] { typeof(ThingRequestGroup) })),
+     Memory.GetMethodStart(typeof(ListerThingsFunctionHolder).GetMethod("hijackThingsInGroup")));
+
+
+        }
+
         public static void ReplaceReachabilityFunctions()
         {
             Memory.WriteJump(Memory.GetMethodStart(typeof(Reachability).GetMethod("ClearCache")),
