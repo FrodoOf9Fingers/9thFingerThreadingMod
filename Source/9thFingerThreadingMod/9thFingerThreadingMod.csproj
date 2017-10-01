@@ -63,6 +63,7 @@
     <Compile Include="debugSpace.cs" />
     <Compile Include="ExpiringObjectMapper.cs" />
     <Compile Include="ListerThingsPatches.cs" />
+    <Compile Include="RegionTraverserPatch.cs" />
     <Compile Include="Replacement Functions\ListerThingsFunctionHolder.cs" />
     <Compile Include="Replacement Functions\RCellFinderFuncionHolder.cs" />
     <Compile Include="Replacement Functions\ReachabilityFunctionHolder.cs" />

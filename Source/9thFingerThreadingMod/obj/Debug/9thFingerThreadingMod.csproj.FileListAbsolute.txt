@@ -10,3 +10,7 @@ C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\9thFinderThreadingMo
 C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\9thFinderThreadingMod\Source\9thFingerThreadingMod\obj\Debug\9thFingerThreadingMod.csprojResolveAssemblyReference.cache
 C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\9thFinderThreadingMod\Source\9thFingerThreadingMod\obj\Debug\9thFingerThreadingMod.csproj.CoreCompileInputs.cache
 C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\9thFinderThreadingMod\Source\9thFingerThreadingMod\obj\Debug\9thFingerThreadingMod.dll
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\9thFingerThreadingMod\Assemblies\9thFingerThreadingMod.dll
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\9thFingerThreadingMod\Source\9thFingerThreadingMod\obj\Debug\9thFingerThreadingMod.csprojResolveAssemblyReference.cache
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\9thFingerThreadingMod\Source\9thFingerThreadingMod\obj\Debug\9thFingerThreadingMod.csproj.CoreCompileInputs.cache
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\9thFingerThreadingMod\Source\9thFingerThreadingMod\obj\Debug\9thFingerThreadingMod.dll
