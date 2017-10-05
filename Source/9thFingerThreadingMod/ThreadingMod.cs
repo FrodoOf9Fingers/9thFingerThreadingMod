@@ -15,6 +15,7 @@ namespace _9thFingerThreadingMod
     {
         public const int NUM_THREADS_PER_MAP = 8;
         public override string ModIdentifier => "threadingmod";
+
         ThreadingMod()
         {
             ThreadingMod.Prepare();

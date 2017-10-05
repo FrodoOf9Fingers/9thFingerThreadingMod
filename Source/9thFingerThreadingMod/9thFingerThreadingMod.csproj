@@ -49,7 +49,6 @@
     <Reference Include="System.Threading, Version=1.0.2856.102, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -59,16 +58,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Blocker.cs" />
-    <Compile Include="debugSpace.cs" />
-    <Compile Include="ExpiringObjectMapper.cs" />
-    <Compile Include="ListerThingsPatches.cs" />
-    <Compile Include="RegionTraverserPatch.cs" />
+    <Compile Include="Utilities\Blocker.cs" />
+    <Compile Include="Utilities\ExpiringObjectMapper.cs" />
+    <Compile Include="Patches\ListerThingsPatches.cs" />
+    <Compile Include="Patches\RegionTraverserPatch.cs" />
     <Compile Include="Replacement Functions\ListerThingsFunctionHolder.cs" />
     <Compile Include="Replacement Functions\RCellFinderFuncionHolder.cs" />
     <Compile Include="Replacement Functions\ReachabilityFunctionHolder.cs" />
-    <Compile Include="FunctionReplacer.cs" />
-    <Compile Include="Replacement Objects\ConcurrentMap.cs" />
+    <Compile Include="Utilities\FunctionReplacer.cs" />
     <Compile Include="Replacement Objects\newListerThings.cs" />
     <Compile Include="Replacement Objects\newMethodBodyReader.cs" />
     <Compile Include="Replacement Objects\newPathFinder.cs" />
@@ -77,13 +74,16 @@
     <Compile Include="Instance Containers\ReachabilityInstanceContrainer.cs" />
     <Compile Include="Replacement Objects\newReachability.cs" />
     <Compile Include="Replacement Objects\newReachabilityCache.cs" />
-    <Compile Include="SingleTickPatch.cs" />
+    <Compile Include="Patches\SingleTickPatch.cs" />
     <Compile Include="ThreadingMod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TickThreadPatch.cs" />
+    <Compile Include="Patches\TickThreadPatch.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Bug Reports\StackTraces.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
