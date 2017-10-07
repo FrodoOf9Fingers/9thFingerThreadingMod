@@ -63,7 +63,7 @@ namespace _9thFingerThreadingMod
 
             for (int i = 0; i < ThreadingMod.NUM_THREADS_PER_MAP; i++)
             {
-                reachersArray[i] = new newReachability(map, reacherCaches[index]);
+                reachersArray[i] = new newReachability(map, reacherCaches[index], (uint) i);
             }
             reachers.Add(index, reachersArray);
             numBusyReachers.Add(index, 0);

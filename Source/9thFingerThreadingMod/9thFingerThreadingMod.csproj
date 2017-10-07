@@ -31,11 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="0Harmony, Version=1.0.9.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\..\Users\Joseph\Desktop\Modding\HugsLib\RimworldHugsLib-master\Mods\HugsLib\Assemblies\0Harmony.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
@@ -58,7 +53,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DebugPatch.cs" />
+    <Compile Include="Patches\PrioritySorterPatch.cs" />
+    <Compile Include="Patches\RandomStatePatch.cs" />
+    <Compile Include="Replacement Functions\RegionListersUpdaterFunctionHolder.cs" />
+    <Compile Include="Replacement Functions\RegionTraverserFunctionHolder.cs" />
+    <Compile Include="Replacement Objects\newRegionListersUpdater.cs" />
+    <Compile Include="Replacement Objects\newRegionTraverser.cs" />
     <Compile Include="Utilities\Blocker.cs" />
+    <Compile Include="Utilities\CatchAdder.cs" />
     <Compile Include="Utilities\ExpiringObjectMapper.cs" />
     <Compile Include="Patches\ListerThingsPatches.cs" />
     <Compile Include="Patches\RegionTraverserPatch.cs" />
@@ -84,6 +87,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Bug Reports\StackTraces.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\..\..\..\Users\Joseph\Desktop\Modding\Harmony\Harmony\Harmony.csproj">
+      <Project>{69aee16a-b6e7-4642-8081-3928b32455df}</Project>
+      <Name>Harmony</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

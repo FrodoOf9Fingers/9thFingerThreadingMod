@@ -8,7 +8,7 @@ namespace _9thFingerThreadingMod
 {
     static class Blocker
     {
-        private static ObjectIDGenerator idGen = new ObjectIDGenerator();
+        public static ObjectIDGenerator idGen = new ObjectIDGenerator();
 
         private static object _waiters = new ConcurrentDictionary<long, EventWaitHandle>();
         private static ConcurrentDictionary<long, EventWaitHandle> Waiters
@@ -23,7 +23,7 @@ namespace _9thFingerThreadingMod
 
             if (!Waiters.ContainsKey(id))
                 Waiters.TryAdd(id, new EventWaitHandle(true, EventResetMode.AutoReset));
-            Waiters[id].WaitOne();
+            Waiters[id].WaitOne(50); //Would be great if we could catch exceptional states with a HarmonyPostFix or a new HarmonyCatcher
         }
 
         public static void Unblock(Object o)

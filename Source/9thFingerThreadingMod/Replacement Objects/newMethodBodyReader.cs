@@ -32,10 +32,6 @@ namespace _9thFingerThreadingMod
             var reader = new FixedMethodBodyReader(method, generator);
             reader.DeclareVariables();
             reader.ReadInstructions();
-            foreach (ILInstruction ci in reader.ilInstructions)
-            {
-                FileLog.Log("IlInstruct: " + ci.ToString());
-            }
             return reader.ilInstructions;
         }
 

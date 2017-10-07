@@ -3,6 +3,7 @@ using Harmony;
 using Harmony.ILCopying;
 using HugsLib;
 using RimWorld;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
@@ -22,30 +23,30 @@ namespace _9thFingerThreadingMod
             Log.Message("Initialized Threading Mod");
         }
 
+        public override void DefsLoaded()
+        {
+            ConstructorInfo constructor = typeof(RegionTraverser).GetConstructor(BindingFlags.Static | BindingFlags.NonPublic, null, new Type[0], null);
+            constructor.Invoke(null, null);
+
+            var obj = typeof(RegionTraverser).GetField("freeWorkers", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+
+            FileLog.Log("Num items: " + obj.GetType().GetProperty("Count").GetValue(obj, null).ToString());
+            FileLog.Log("num workers: " + RegionTraverser.NumWorkers.ToString());
+        }
+
         public static bool Prepare()
         {
             Log.Message("Thread Mod Function Replacement Started");
             FunctionReplacer.ReplacePathfinderFunctions();
             FunctionReplacer.ReplaceReachabilityFunctions();
             FunctionReplacer.ReplaceListerThings();
+            FunctionReplacer.ReplaceRegionListers();
+            FunctionReplacer.replaceRegionTraverser();
             Memory.WriteJump(Memory.GetMethodStart(typeof(RCellFinder).GetMethod("RandomWanderDestFor")),
                     Memory.GetMethodStart(typeof(RCellFinderFuncionHolder).GetMethod("newRandomWanderDestFor")));
 
             Log.Message("Thread Mod Function Replacement Complete");
             return true;
-        }
-
-        public static List<CodeInstruction> MethodToCodeInstructions(MethodBase method, ILGenerator generator)
-        {
-            FileLog.Reset();
-            List<CodeInstruction> codeInstructions = new List<CodeInstruction>();
-            foreach (ILInstruction Ili in FixedMethodBodyReader.GetInstructions(method, generator))
-            {
-                CodeInstruction ci = Ili.GetCodeInstruction();
-                // Log.Message(ci.ToString());
-                codeInstructions.Add(ci);
-            }
-            return codeInstructions;
         }
     }
 }

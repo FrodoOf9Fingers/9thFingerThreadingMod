@@ -1,4 +1,5 @@
 ﻿using RimWorld;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
@@ -8,6 +9,33 @@ namespace _9thFingerThreadingMod.Replacement_Objects
 {
     public class newReachability
     {
+        private uint id = 0;
+        private static object _regionsReached = new ConcurrentDictionary<Region, uint[]>();
+        private static ConcurrentDictionary<Region, uint[]> RegionsReached
+        {
+            get { return (ConcurrentDictionary<Region, uint[]>)_regionsReached; }
+        }
+
+        private static bool regionReach(Region r, uint id, uint reachedIndex)
+        {
+            if (!RegionsReached.ContainsKey(r))
+            {
+                uint[] idIndexedReachedIndex = new uint[ThreadingMod.NUM_THREADS_PER_MAP];
+                RegionsReached.TryAdd(r, idIndexedReachedIndex);
+            }
+
+            return RegionsReached[r][id] == reachedIndex;
+        }
+        private static void setRegionReach(Region r, uint id, uint reachedIndex)
+        {
+            if (!RegionsReached.ContainsKey(r))
+            {
+                uint[] idIndexedReachedIndex = new uint[ThreadingMod.NUM_THREADS_PER_MAP];
+                RegionsReached.TryAdd(r, idIndexedReachedIndex);
+            }
+            RegionsReached[r][id] = reachedIndex;
+        }
+
         private Map map;
 
         private Queue<Region> openQueue = new Queue<Region>();
@@ -28,10 +56,11 @@ namespace _9thFingerThreadingMod.Replacement_Objects
 
         private RegionGrid regionGrid;
 
-        public newReachability(Map map, newReachabilityCache cache)
+        public newReachability(Map map, newReachabilityCache cache, uint id)
         {
             this.map = map;
             this.cache = cache;
+            this.id = id;
         }
 
         public void ClearCache()
@@ -49,13 +78,13 @@ namespace _9thFingerThreadingMod.Replacement_Objects
                 Log.ErrorOnce("Tried to queue null region.", 881121);
                 return;
             }
-            if (region.reachedIndex == this.reachedIndex)
+            if (regionReach(region, id, reachedIndex))
             {
                 Log.ErrorOnce("Region is already reached; you can't open it. Region: " + region.ToString(), 719991);
                 return;
             }
             this.openQueue.Enqueue(region);
-            region.reachedIndex = this.reachedIndex;
+            setRegionReach(region, id, reachedIndex);
             this.numRegionsOpened++;
         }
 
@@ -238,7 +267,7 @@ namespace _9thFingerThreadingMod.Replacement_Objects
                         if (this.pathGrid.WalkableFast(intVec))
                         {
                             Region validRegionAt2 = this.regionGrid.GetValidRegionAt(intVec);
-                            if (validRegionAt2 != null && validRegionAt2.reachedIndex != this.reachedIndex)
+                            if (validRegionAt2 != null && regionReach(validRegionAt2, id, reachedIndex))
                             {
                                 this.QueueNewOpenRegion(validRegionAt2);
                                 this.startingRegions.Add(validRegionAt2);
@@ -289,7 +318,7 @@ namespace _9thFingerThreadingMod.Replacement_Objects
                     for (int j = 0; j < 2; j++)
                     {
                         Region region2 = regionLink.regions[j];
-                        if (region2 != null && region2.reachedIndex != this.reachedIndex && region2.type.Passable())
+                        if (region2 != null && regionReach(region2, id, reachedIndex) && region2.type.Passable())
                         {
                             if (region2.Allows(traverseParams, false))
                             {
@@ -470,7 +499,7 @@ namespace _9thFingerThreadingMod.Replacement_Objects
                 }
                 return false;
             };
-            RegionTraverser.BreadthFirstTraverse(region, entryCondition, regionProcessor, 9999, RegionType.Set_Passable);
+            newRegionTraverser.BreadthFirstTraverse(region, entryCondition, regionProcessor, 9999, RegionType.Set_Passable);
             return foundReg;
         }
 
@@ -520,7 +549,7 @@ namespace _9thFingerThreadingMod.Replacement_Objects
                 }
                 return false;
             };
-            RegionTraverser.BreadthFirstTraverse(region, entryCondition, regionProcessor, 9999, RegionType.Set_Passable);
+            newRegionTraverser.BreadthFirstTraverse(region, entryCondition, regionProcessor, 9999, RegionType.Set_Passable);
             return foundReg;
         }
     }

@@ -61,7 +61,6 @@ namespace _9thFingerThreadingMod.Replacement_Functions
             String index = "";
             try
             {
-                Harmony.FileLog.Log("hijackCanReachColony");
                 FieldInfo mapField = typeof(Reachability).GetField("map", BindingFlags.NonPublic | BindingFlags.Instance);
                 Map map = (Map)mapField.GetValue(oldReacher);
                 index = map.GetUniqueLoadID();
