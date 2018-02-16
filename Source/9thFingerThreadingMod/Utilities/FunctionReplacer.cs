@@ -3,6 +3,8 @@ using _9thFingerThreadingMod.Replacement_Objects;
 using Harmony.ILCopying;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Verse;
 using Verse.AI;
 
@@ -10,6 +12,69 @@ namespace _9thFingerThreadingMod
 {
     static class FunctionReplacer
     {
+
+        public static void autoReplace(Type from, Type to, BindingFlags flags)
+        {
+            List<MethodBase> fromMethods;
+            List<MethodBase> toMethods;
+
+            if (flags != BindingFlags.Default)
+            {
+                fromMethods = from.GetMethods(flags).ToList<MethodBase>();
+                toMethods = to.GetMethods(flags).ToList<MethodBase>();
+
+                fromMethods.AddRange(from.GetConstructors(flags).ToList<MethodBase>());
+                toMethods.AddRange(to.GetConstructors(flags).ToList<MethodBase>());
+            }
+            else
+            {
+                fromMethods = from.GetMethods().ToList<MethodBase>();
+                toMethods = to.GetMethods().ToList<MethodBase>();
+
+                fromMethods.AddRange(from.GetConstructors().ToList<MethodBase>());
+                toMethods.AddRange(to.GetConstructors().ToList<MethodBase>());
+            }
+
+            foreach (MethodBase fromMethod in fromMethods)
+            {
+                List<ParameterInfo> setA = fromMethod.GetParameters().ToList();
+                foreach (MethodBase toMethod in toMethods)
+                {
+                    List<ParameterInfo> setB = toMethod.GetParameters().ToList();
+                    if (fromMethod.Name == toMethod.Name && compareParameterInfoArrays(setA, setB))
+                    {
+                        Memory.WriteJump(Memory.GetMethodStart(fromMethod), Memory.GetMethodStart(toMethod));
+                    }
+                }
+            }
+        }
+
+        private static bool compareParameterInfoArrays(List<ParameterInfo> setA, List<ParameterInfo> setB)
+        {
+            foreach (ParameterInfo item in setA)
+            {
+                if (!setB.Contains(item, new CustomeParameterInfoComparer()))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private class CustomeParameterInfoComparer : IEqualityComparer<ParameterInfo>
+        {
+            bool IEqualityComparer<ParameterInfo>.Equals(ParameterInfo x, ParameterInfo y)
+            {
+                return x.ParameterType == y.ParameterType && 
+                    x.Position == y.Position;
+            }
+
+            int IEqualityComparer<ParameterInfo>.GetHashCode(ParameterInfo obj)
+            {
+                return obj.GetHashCode();
+            }
+        }
+
         public static void replaceRegionTraverser()
         {
             Memory.WriteJump(Memory.GetMethodStart(typeof(RegionTraverser).GetMethod("BreadthFirstTraverse", new Type[] { typeof(Region), typeof(RegionEntryPredicate), typeof(RegionProcessor), typeof(int), typeof(RegionType) })),

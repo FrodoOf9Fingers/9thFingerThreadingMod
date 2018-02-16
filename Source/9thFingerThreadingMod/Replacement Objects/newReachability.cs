@@ -65,9 +65,9 @@ namespace _9thFingerThreadingMod.Replacement_Objects
 
         public void ClearCache()
         {
-            if (cache.Count > 0)
+            if (this.cache.Count > 0)
             {
-                cache.Clear();
+                this.cache.Clear();
             }
         }
 
@@ -78,13 +78,13 @@ namespace _9thFingerThreadingMod.Replacement_Objects
                 Log.ErrorOnce("Tried to queue null region.", 881121);
                 return;
             }
-            if (regionReach(region, id, reachedIndex))
+            if (region.reachedIndex == this.reachedIndex)
             {
                 Log.ErrorOnce("Region is already reached; you can't open it. Region: " + region.ToString(), 719991);
                 return;
             }
             this.openQueue.Enqueue(region);
-            setRegionReach(region, id, reachedIndex);
+            region.reachedIndex = this.reachedIndex;
             this.numRegionsOpened++;
         }
 
@@ -117,7 +117,7 @@ namespace _9thFingerThreadingMod.Replacement_Objects
         {
             if (this.working)
             {
-                Log.ErrorOnce("Called new-ReachableBetween while working. This should never happen. Suppressing further errors.", 7312233);
+                Log.ErrorOnce("Called ReachableBetween while working. This should never happen. Suppressing further errors.", 7312233);
                 return false;
             }
             if (traverseParams.pawn != null)
@@ -214,16 +214,21 @@ namespace _9thFingerThreadingMod.Replacement_Objects
                     {
                         if (this.startingRegions.Any<Region>() && this.destRegions.Any<Region>())
                         {
-                            switch (this.GetCachedResult(traverseParams))
+                            BoolUnknown cachedResult = this.GetCachedResult(traverseParams);
+                            if (cachedResult == BoolUnknown.True)
                             {
-                                case BoolUnknown.True:
-                                    this.FinalizeCheck();
-                                    result = true;
-                                    return result;
-                                case BoolUnknown.False:
-                                    this.FinalizeCheck();
-                                    result = false;
-                                    return result;
+                                this.FinalizeCheck();
+                                result = true;
+                                return result;
+                            }
+                            if (cachedResult == BoolUnknown.False)
+                            {
+                                this.FinalizeCheck();
+                                result = false;
+                                return result;
+                            }
+                            if (cachedResult != BoolUnknown.Unknown)
+                            {
                             }
                         }
                         if (traverseParams.mode == TraverseMode.PassAllDestroyableThings)
@@ -267,7 +272,7 @@ namespace _9thFingerThreadingMod.Replacement_Objects
                         if (this.pathGrid.WalkableFast(intVec))
                         {
                             Region validRegionAt2 = this.regionGrid.GetValidRegionAt(intVec);
-                            if (validRegionAt2 != null && regionReach(validRegionAt2, id, reachedIndex))
+                            if (validRegionAt2 != null && validRegionAt2.reachedIndex != this.reachedIndex)
                             {
                                 this.QueueNewOpenRegion(validRegionAt2);
                                 this.startingRegions.Add(validRegionAt2);
@@ -289,7 +294,7 @@ namespace _9thFingerThreadingMod.Replacement_Objects
                     {
                         return BoolUnknown.True;
                     }
-                    BoolUnknown boolUnknown = cache.CachedResultFor(this.startingRegions[i].Room, this.destRegions[j].Room, traverseParams);
+                    BoolUnknown boolUnknown = this.cache.CachedResultFor(this.startingRegions[i].Room, this.destRegions[j].Room, traverseParams);
                     if (boolUnknown == BoolUnknown.True)
                     {
                         return BoolUnknown.True;
@@ -318,7 +323,7 @@ namespace _9thFingerThreadingMod.Replacement_Objects
                     for (int j = 0; j < 2; j++)
                     {
                         Region region2 = regionLink.regions[j];
-                        if (region2 != null && regionReach(region2, id, reachedIndex) && region2.type.Passable())
+                        if (region2 != null && region2.reachedIndex != this.reachedIndex && region2.type.Passable())
                         {
                             if (region2.Allows(traverseParams, false))
                             {
@@ -326,7 +331,7 @@ namespace _9thFingerThreadingMod.Replacement_Objects
                                 {
                                     for (int k = 0; k < this.startingRegions.Count; k++)
                                     {
-                                       cache.AddCachedResult(this.startingRegions[k].Room, region2.Room, traverseParams, true);
+                                        this.cache.AddCachedResult(this.startingRegions[k].Room, region2.Room, traverseParams, true);
                                     }
                                     return true;
                                 }
@@ -340,7 +345,7 @@ namespace _9thFingerThreadingMod.Replacement_Objects
             {
                 for (int m = 0; m < this.destRegions.Count; m++)
                 {
-                    cache.AddCachedResult(this.startingRegions[l].Room, this.destRegions[m].Room, traverseParams, false);
+                    this.cache.AddCachedResult(this.startingRegions[l].Room, this.destRegions[m].Room, traverseParams, false);
                 }
             }
             return false;
@@ -384,7 +389,7 @@ namespace _9thFingerThreadingMod.Replacement_Objects
                     return true;
                 }
                 return false;
-            }, false);
+            }, 2147483647, false, null);
             if (foundCell.IsValid)
             {
                 Region validRegionAt = this.regionGrid.GetValidRegionAt(foundCell);
@@ -392,7 +397,7 @@ namespace _9thFingerThreadingMod.Replacement_Objects
                 {
                     for (int i = 0; i < this.startingRegions.Count; i++)
                     {
-                        cache.AddCachedResult(this.startingRegions[i].Room, validRegionAt.Room, traverseParams, true);
+                        this.cache.AddCachedResult(this.startingRegions[i].Room, validRegionAt.Room, traverseParams, true);
                     }
                 }
                 return true;
@@ -401,7 +406,7 @@ namespace _9thFingerThreadingMod.Replacement_Objects
             {
                 for (int k = 0; k < this.destRegions.Count; k++)
                 {
-                    cache.AddCachedResult(this.startingRegions[j].Room, this.destRegions[k].Room, traverseParams, false);
+                    this.cache.AddCachedResult(this.startingRegions[j].Room, this.destRegions[k].Room, traverseParams, false);
                 }
             }
             return false;
@@ -454,7 +459,24 @@ namespace _9thFingerThreadingMod.Replacement_Objects
                     }
                 }
             }
-            return false;
+            return this.CanReachBiggestMapEdgeRoom(c);
+        }
+
+        public bool CanReachBiggestMapEdgeRoom(IntVec3 c)
+        {
+            Room room = null;
+            for (int i = 0; i < this.map.regionGrid.allRooms.Count; i++)
+            {
+                Room room2 = this.map.regionGrid.allRooms[i];
+                if (room2.TouchesMapEdge)
+                {
+                    if (room == null || room2.RegionCount > room.RegionCount)
+                    {
+                        room = room2;
+                    }
+                }
+            }
+            return room != null && this.CanReach(c, room.Regions[0].AnyCell, PathEndMode.OnCell, TraverseParms.For(TraverseMode.PassDoors, Danger.Deadly, false));
         }
 
         public bool CanReachMapEdge(IntVec3 c, TraverseParms traverseParms)
@@ -499,7 +521,7 @@ namespace _9thFingerThreadingMod.Replacement_Objects
                 }
                 return false;
             };
-            newRegionTraverser.BreadthFirstTraverse(region, entryCondition, regionProcessor, 9999, RegionType.Set_Passable);
+            RegionTraverser.BreadthFirstTraverse(region, entryCondition, regionProcessor, 9999, RegionType.Set_Passable);
             return foundReg;
         }
 
@@ -549,7 +571,7 @@ namespace _9thFingerThreadingMod.Replacement_Objects
                 }
                 return false;
             };
-            newRegionTraverser.BreadthFirstTraverse(region, entryCondition, regionProcessor, 9999, RegionType.Set_Passable);
+            RegionTraverser.BreadthFirstTraverse(region, entryCondition, regionProcessor, 9999, RegionType.Set_Passable);
             return foundReg;
         }
     }

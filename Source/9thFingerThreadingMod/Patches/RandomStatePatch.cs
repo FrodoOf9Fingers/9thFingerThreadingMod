@@ -7,7 +7,7 @@ using Verse;
 
 namespace _9thFingerThreadingMod.Patches
 {
-    class RandomStatePatch
+    /*class RandomStatePatch
     {
         public static object mutex = new object();
     }
@@ -44,6 +44,6 @@ namespace _9thFingerThreadingMod.Patches
         {
             Blocker.Unblock(RandomStatePatch.mutex);
         }
-    }
+    }*/
 }
 

@@ -36,7 +36,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="HugsLib">
-      <HintPath>..\..\..\..\..\..\..\..\..\Users\Joseph\Desktop\Modding\HugsLib\RimworldHugsLib-master\Mods\HugsLib\Assemblies\HugsLib.dll</HintPath>
+      <HintPath>..\..\..\HugsLib\Assemblies\HugsLib.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -56,6 +56,7 @@
     <Compile Include="DebugPatch.cs" />
     <Compile Include="Patches\PrioritySorterPatch.cs" />
     <Compile Include="Patches\RandomStatePatch.cs" />
+    <Compile Include="Patches\SustainerManagerPatch.cs" />
     <Compile Include="Replacement Functions\RegionListersUpdaterFunctionHolder.cs" />
     <Compile Include="Replacement Functions\RegionTraverserFunctionHolder.cs" />
     <Compile Include="Replacement Objects\newRegionListersUpdater.cs" />

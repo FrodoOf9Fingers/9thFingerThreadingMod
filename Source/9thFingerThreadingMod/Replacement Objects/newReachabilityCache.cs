@@ -8,6 +8,7 @@ namespace _9thFingerThreadingMod.Replacement_Objects
 {
     public class newReachabilityCache
     {
+        //Just a guts change
         [StructLayout(LayoutKind.Sequential, Size = 1)]
         private struct CachedEntry : IEquatable<newReachabilityCache.CachedEntry>
         {
@@ -31,6 +32,7 @@ namespace _9thFingerThreadingMod.Replacement_Objects
 
             public CachedEntry(int firstRoomID, int secondRoomID, TraverseParms traverseParms)
             {
+                this = default(newReachabilityCache.CachedEntry);
                 if (firstRoomID < secondRoomID)
                 {
                     this.FirstRoomID = firstRoomID;
@@ -42,6 +44,16 @@ namespace _9thFingerThreadingMod.Replacement_Objects
                     this.SecondRoomID = firstRoomID;
                 }
                 this.TraverseParms = traverseParms;
+            }
+
+            public static bool operator ==(newReachabilityCache.CachedEntry lhs, newReachabilityCache.CachedEntry rhs)
+            {
+                return lhs.Equals(rhs);
+            }
+
+            public static bool operator !=(newReachabilityCache.CachedEntry lhs, newReachabilityCache.CachedEntry rhs)
+            {
+                return !lhs.Equals(rhs);
             }
 
             public override bool Equals(object obj)
@@ -58,16 +70,6 @@ namespace _9thFingerThreadingMod.Replacement_Objects
             {
                 int seed = Gen.HashCombineInt(this.FirstRoomID, this.SecondRoomID);
                 return Gen.HashCombineStruct<TraverseParms>(seed, this.TraverseParms);
-            }
-
-            public static bool operator ==(newReachabilityCache.CachedEntry lhs, newReachabilityCache.CachedEntry rhs)
-            {
-                return lhs.Equals(rhs);
-            }
-
-            public static bool operator !=(newReachabilityCache.CachedEntry lhs, newReachabilityCache.CachedEntry rhs)
-            {
-                return !lhs.Equals(rhs);
             }
         }
 
