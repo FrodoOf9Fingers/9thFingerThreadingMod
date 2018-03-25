@@ -25,6 +25,16 @@ namespace _9thFingerThreadingMod
         private EventWaitHandle addingReachers = new EventWaitHandle(true, EventResetMode.AutoReset);
         private Dictionary<String, newReachability[]> reachers = new Dictionary<String, newReachability[]>();
 
+        public void refreshReachers()
+        {
+            reachers = new Dictionary<String, newReachability[]>();
+            addingReachers = new EventWaitHandle(true, EventResetMode.AutoReset);
+            reacherCaches = new Dictionary<String, newReachabilityCache>();
+            busyReachers = new Dictionary<String, bool[]>();
+            numBusyReachers = new Dictionary<String, int>();
+            reachersBusy = new Dictionary<String, EventWaitHandle>();
+        }
+
         public newReachability requestReacher(String index, ref int ticket, Map map)
         {
             if (!reachers.ContainsKey(index))

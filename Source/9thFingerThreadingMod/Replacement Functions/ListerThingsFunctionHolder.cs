@@ -11,7 +11,6 @@ namespace _9thFingerThreadingMod.Replacement_Functions
 {
     static class ListerThingsFunctionHolder
     {
-
         private static newListerThings newInstance(ListerThings old)
         {
             newListerThings obj = new newListerThings(old.use);
@@ -34,6 +33,7 @@ namespace _9thFingerThreadingMod.Replacement_Functions
 
         public static List<Thing> hijackAllThings(this ListerThings oldListerThings)
         {
+            FileLog.Log("Hijack All Things");
             newListerThings newObj = null;
             try
             {
@@ -44,6 +44,8 @@ namespace _9thFingerThreadingMod.Replacement_Functions
                     throw new ArgumentException();
                 lock (newObj)
                 {
+                    foreach (Thing t in newObj.AllThings)
+                        FileLog.Log(t.ToString());
                     var retval = newObj.AllThings;
                     return retval;
                 }

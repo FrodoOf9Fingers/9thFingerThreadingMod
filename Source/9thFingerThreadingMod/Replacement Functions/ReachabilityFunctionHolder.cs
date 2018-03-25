@@ -84,7 +84,6 @@ namespace _9thFingerThreadingMod.Replacement_Functions
             String index = "";
             try
             {
-                Harmony.FileLog.Log("hijackCanReachFactionBase");
                 FieldInfo mapField = typeof(Reachability).GetField("map", BindingFlags.NonPublic | BindingFlags.Instance);
                 Map map = (Map)mapField.GetValue(oldReacher);
                 index = map.GetUniqueLoadID();
@@ -108,7 +107,6 @@ namespace _9thFingerThreadingMod.Replacement_Functions
             String index = "";
             try
             {
-                Harmony.FileLog.Log("hijackCanReachMapEdge");
                 FieldInfo mapField = typeof(Reachability).GetField("map", BindingFlags.NonPublic | BindingFlags.Instance);
                 Map map = (Map)mapField.GetValue(oldReacher);
                 index = map.GetUniqueLoadID();
@@ -132,7 +130,6 @@ namespace _9thFingerThreadingMod.Replacement_Functions
             String index = "";
             try
             {
-                Harmony.FileLog.Log("hijackCanReachUnfogged");
                 FieldInfo mapField = typeof(Reachability).GetField("map", BindingFlags.NonPublic | BindingFlags.Instance);
                 Map map = (Map)mapField.GetValue(oldReacher);
 

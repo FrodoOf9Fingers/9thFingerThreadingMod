@@ -365,7 +365,7 @@ namespace _9thFingerThreadingMod.Replacement_Objects
                     if (!pathGrid.WalkableFast(num))
                     {
                         Building edifice = c.GetEdifice(this.map);
-                        if (edifice == null || !PathFinder.IsDestroyable(edifice))
+                        if (edifice == null || !newPathFinder.IsDestroyable(edifice))
                         {
                             return false;
                         }

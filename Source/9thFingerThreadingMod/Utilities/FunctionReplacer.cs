@@ -113,6 +113,9 @@ namespace _9thFingerThreadingMod
 
         public static void ReplaceListerThings()
         {
+            /*Memory.WriteJump(Memory.GetMethodStart(typeof(ListerThings).GetMethod("get_AllThings")),
+                                Memory.GetMethodStart(typeof(ListerThingsFunctionHolder).GetMethod("hijackAllThings")));
+
             Memory.WriteJump(Memory.GetMethodStart(typeof(ListerThings).GetMethod("EverListable", new Type[] { typeof(ThingDef), typeof(ListerThingsUse) })),
                                 Memory.GetMethodStart(typeof(ListerThingsFunctionHolder).GetMethod("hijackEverListable")));
 
@@ -132,8 +135,7 @@ namespace _9thFingerThreadingMod
                                 Memory.GetMethodStart(typeof(ListerThingsFunctionHolder).GetMethod("hijackThingsOfDef")));
 
             Memory.WriteJump(Memory.GetMethodStart(typeof(ListerThings).GetMethod("ThingsInGroup", new Type[] { typeof(ThingRequestGroup) })),
-                                Memory.GetMethodStart(typeof(ListerThingsFunctionHolder).GetMethod("hijackThingsInGroup")));
-
+                                Memory.GetMethodStart(typeof(ListerThingsFunctionHolder).GetMethod("hijackThingsInGroup")));*/
 
         }
 

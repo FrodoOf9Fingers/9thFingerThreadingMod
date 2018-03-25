@@ -1,32 +1,113 @@
-﻿
-
-Keezly threw exception in WorkGiver DoctorTendEmergency: System.NullReferenceException: Object reference not set to an instance of an object
-  at RimWorld.RestUtility.CurrentBed (Verse.Pawn p) [0x00000] in <filename unknown>:0 
-  at Verse.Pawn.get_InteractionCell () [0x00000] in <filename unknown>:0 
-  at Verse.AI.GenPath.ResolvePathMode (Verse.Pawn pawn, TargetInfo dest, Verse.AI.PathEndMode& peMode) [0x00000] in <filename unknown>:0 
-  at Verse.ReachabilityImmediate.CanReachImmediate (IntVec3 start, LocalTargetInfo target, Verse.Map map, PathEndMode peMode, Verse.Pawn pawn) [0x00000] in <filename unknown>:0 
-  at _9thFingerThreadingMod.Replacement_Objects.newReachability.CanReach (IntVec3 start, LocalTargetInfo dest, PathEndMode peMode, TraverseParms traverseParams) [0x00000] in <filename unknown>:0 
-  at _9thFingerThreadingMod.Replacement_Functions.ReachabilityFunctionHolder.hijackCanReach (Verse.Reachability oldReacher, IntVec3 start, LocalTargetInfo dest, PathEndMode peMode, TraverseParms traverseParams) [0x00000] in <filename unknown>:0 
-
-  Exception ticking Hare59167: System.ArgumentOutOfRangeException: Argument is out of range.
+﻿Exception ticking Mote_AirPuff: System.ArgumentOutOfRangeException: Argument is out of range.
 Parameter name: index
-  at System.Collections.Generic.List`1[Verse.AI.newPathFinder+CostNode].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
-  at Verse.FastPriorityQueue`1[Verse.AI.newPathFinder+CostNode].Pop () [0x00000] in <filename unknown>:0 
-  at Verse.AI.newPathFinder.FindPath (IntVec3 start, LocalTargetInfo dest, TraverseParms traverseParms, PathEndMode peMode) [0x00000] in <filename unknown>:0 
-  at _9thFingerThreadingMod.PathFinderFunctionHolder.NewFindPath (Verse.AI.PathFinder pf, IntVec3 start, LocalTargetInfo dest, TraverseParms traverseParms, PathEndMode peMode) [0x00000] in <filename unknown>:0 
-  at Verse.AI.PathFinder.FindPath (IntVec3 start, LocalTargetInfo dest, Verse.Pawn pawn, PathEndMode peMode) [0x00000] in <filename unknown>:0 
-  at Verse.AI.Pawn_PathFollower.GenerateNewPath () [0x00000] in <filename unknown>:0 
-  at Verse.AI.Pawn_PathFollower.TrySetNewPath () [0x00000] in <filename unknown>:0 
-  at Verse.AI.Pawn_PathFollower.TryEnterNextPathCell () [0x00000] in <filename unknown>:0 
-  at Verse.AI.Pawn_PathFollower.PatherTick () [0x00000] in <filename unknown>:0 
-  at Verse.Pawn.Tick () [0x00000] in <filename unknown>:0 
-  at _9thFingerThreadingMod.TickThreadPatch+<>c__DisplayClass1_0.<TickDetour>b__0 (Int32 m) [0x00000] in <filename unknown>:0 
-
-
-  Exception ticking Rat59203: System.NullReferenceException: Object reference not set to an instance of an object
-  at Verse.RegionListersUpdater.RegisterInRegions (Verse.Thing thing, Verse.Map map) [0x00000] in <filename unknown>:0 
+  at System.Collections.Generic.List`1[Verse.Thing].RemoveAt (Int32 index) [0x00000] in <filename unknown>:0 
+  at System.Collections.Generic.List`1[Verse.Thing].Remove (Verse.Thing item) [0x00000] in <filename unknown>:0 
+  at Verse.ThingGrid.DeregisterInCell (Verse.Thing t, IntVec3 c) [0x00000] in <filename unknown>:0                       <----- ThingGrid needs to be handled
+  at Verse.ThingGrid.Deregister (Verse.Thing t, Boolean doEvenIfDespawned) [0x00000] in <filename unknown>:0 
   at Verse.Thing.set_Position (IntVec3 value) [0x00000] in <filename unknown>:0 
-  at Verse.AI.Pawn_PathFollower.TryEnterNextPathCell () [0x00000] in <filename unknown>:0 
-  at Verse.AI.Pawn_PathFollower.PatherTick () [0x00000] in <filename unknown>:0 
-  at Verse.Pawn.Tick () [0x00000] in <filename unknown>:0 
-  at _9thFingerThreadingMod.TickThreadPatch+<>c__DisplayClass1_0.<TickDetour>b__0 (Int32 m) [0x00000] in <filename unknown>:0 
+  at Verse.MoteThrown.TimeInterval (Single deltaTime) [0x00000] in <filename unknown>:0 
+  at Verse.Mote.Tick () [0x00000] in <filename unknown>:0 
+  at _9thFingerThreadingMod.TickThreadPatch+<>c__DisplayClass5_0.<mainUpdateLoop>b__0 (Int32 m) [0x00000] in <filename unknown>:0 
+Verse.Log:Error(String)
+_9thFingerThreadingMod.<>c__DisplayClass5_0:<mainUpdateLoop>b__0(Int32)
+System.Threading.Tasks.<>c__DisplayClassf`1:<ForWorker>b__c()
+System.Threading.Tasks.Task:InnerInvoke()
+System.Threading.Tasks.Task:InnerInvokeWithArg(Task)
+System.Threading.Tasks.<>c__DisplayClass3:<ExecuteSelfReplicating>b__2(Object)
+System.Threading.Tasks.Task:InnerInvoke()
+System.Threading.Tasks.Task:Execute()
+System.Threading.Tasks.Task:ExecutionContextCallback(Object)
+System.Security.SecurityContext:Run(SecurityContext, ContextCallback, Object)
+System.Threading.ExecutionContext:Run(ExecutionContext, ContextCallback, Object)
+System.Threading.Tasks.Task:ExecuteWithThreadLocal(Task&)
+System.Threading.Tasks.Task:ExecuteEntry(Boolean)
+System.Threading.Tasks.ThreadPoolTaskScheduler:TaskExecuteWaitCallback(Object)
+
+
+
+
+ My Code....
+Exception ticking Mote_AirPuff: System.ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[Verse.Thing].RemoveAt (Int32 index) [0x00000] in <filename unknown>:0 
+  at System.Collections.Generic.List`1[Verse.Thing].Remove (Verse.Thing item) [0x00000] in <filename unknown>:0 
+  at Verse.ThingGrid.DeregisterInCell (Verse.Thing t, IntVec3 c) [0x00000] in <filename unknown>:0 
+  at Verse.ThingGrid.Deregister (Verse.Thing t, Boolean doEvenIfDespawned) [0x00000] in <filename unknown>:0 
+  at Verse.Thing.set_Position (IntVec3 value) [0x00000] in <filename unknown>:0 
+  at Verse.MoteThrown.TimeInterval (Single deltaTime) [0x00000] in <filename unknown>:0 
+  at Verse.Mote.Tick () [0x00000] in <filename unknown>:0 
+  at _9thFingerThreadingMod.TickThreadPatch+<>c__DisplayClass5_0.<mainUpdateLoop>b__0 (Int32 m) [0x00000] in <filename unknown>:0 
+Verse.Log:Error(String)
+_9thFingerThreadingMod.<>c__DisplayClass5_0:<mainUpdateLoop>b__0(Int32)
+System.Threading.Tasks.<>c__DisplayClassf`1:<ForWorker>b__c()
+System.Threading.Tasks.Task:InnerInvoke()
+System.Threading.Tasks.Task:InnerInvokeWithArg(Task)
+System.Threading.Tasks.<>c__DisplayClass3:<ExecuteSelfReplicating>b__2(Object)
+System.Threading.Tasks.Task:InnerInvoke()
+System.Threading.Tasks.Task:Execute()
+System.Threading.Tasks.Task:ExecutionContextCallback(Object)
+System.Security.SecurityContext:Run(SecurityContext, ContextCallback, Object)
+System.Threading.ExecutionContext:Run(ExecutionContext, ContextCallback, Object)
+System.Threading.Tasks.Task:ExecuteWithThreadLocal(Task&)
+System.Threading.Tasks.Task:ExecuteEntry(Boolean)
+System.Threading.Tasks.ThreadPoolTaskScheduler:TaskExecuteWaitCallback(Object)
+
+
+
+
+
+Exception ticking Mote_AirPuff: System.ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[Verse.Thing].RemoveAt (Int32 index) [0x00000] in <filename unknown>:0 
+  at System.Collections.Generic.List`1[Verse.Thing].Remove (Verse.Thing item) [0x00000] in <filename unknown>:0 
+  at Verse.ThingGrid.DeregisterInCell (Verse.Thing t, IntVec3 c) [0x00000] in <filename unknown>:0 
+  at Verse.ThingGrid.Deregister (Verse.Thing t, Boolean doEvenIfDespawned) [0x00000] in <filename unknown>:0 
+  at Verse.Thing.set_Position (IntVec3 value) [0x00000] in <filename unknown>:0 
+  at Verse.MoteThrown.TimeInterval (Single deltaTime) [0x00000] in <filename unknown>:0 
+  at Verse.Mote.Tick () [0x00000] in <filename unknown>:0 
+  at _9thFingerThreadingMod.TickThreadPatch+<>c__DisplayClass5_0.<mainUpdateLoop>b__0 (Int32 m) [0x00000] in <filename unknown>:0 
+Verse.Log:Error(String)
+_9thFingerThreadingMod.<>c__DisplayClass5_0:<mainUpdateLoop>b__0(Int32)
+System.Threading.Tasks.<>c__DisplayClassf`1:<ForWorker>b__c()
+System.Threading.Tasks.Task:InnerInvoke()
+System.Threading.Tasks.Task:InnerInvokeWithArg(Task)
+System.Threading.Tasks.<>c__DisplayClass3:<ExecuteSelfReplicating>b__2(Object)
+System.Threading.Tasks.Task:InnerInvoke()
+System.Threading.Tasks.Task:Execute()
+System.Threading.Tasks.Task:ExecutionContextCallback(Object)
+System.Security.SecurityContext:Run(SecurityContext, ContextCallback, Object)
+System.Threading.ExecutionContext:Run(ExecutionContext, ContextCallback, Object)
+System.Threading.Tasks.Task:ExecuteWithThreadLocal(Task&)
+System.Threading.Tasks.Task:ExecuteEntry(Boolean)
+System.Threading.Tasks.ThreadPoolTaskScheduler:TaskExecuteWaitCallback(Object)
+
+Deteriation Bug
+
+
+
+?Related to:
+Exception ticking Mote_AirPuff: System.ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[Verse.Thing].RemoveAt (Int32 index) [0x00000] in <filename unknown>:0 
+  at System.Collections.Generic.List`1[Verse.Thing].Remove (Verse.Thing item) [0x00000] in <filename unknown>:0 
+  at Verse.ThingGrid.DeregisterInCell (Verse.Thing t, IntVec3 c) [0x00000] in <filename unknown>:0 
+  at Verse.ThingGrid.Deregister (Verse.Thing t, Boolean doEvenIfDespawned) [0x00000] in <filename unknown>:0 
+  at Verse.Thing.set_Position (IntVec3 value) [0x00000] in <filename unknown>:0 
+  at Verse.MoteThrown.TimeInterval (Single deltaTime) [0x00000] in <filename unknown>:0 
+  at Verse.Mote.Tick () [0x00000] in <filename unknown>:0 
+  at _9thFingerThreadingMod.TickThreadPatch+<>c__DisplayClass5_0.<mainUpdateLoop>b__0 (Int32 m) [0x00000] in <filename unknown>:0 
+Verse.Log:Error(String)
+_9thFingerThreadingMod.<>c__DisplayClass5_0:<mainUpdateLoop>b__0(Int32)
+System.Threading.Tasks.<>c__DisplayClassf`1:<ForWorker>b__c()
+System.Threading.Tasks.Task:InnerInvoke()
+System.Threading.Tasks.Task:InnerInvokeWithArg(Task)
+System.Threading.Tasks.<>c__DisplayClass3:<ExecuteSelfReplicating>b__2(Object)
+System.Threading.Tasks.Task:InnerInvoke()
+System.Threading.Tasks.Task:Execute()
+System.Threading.Tasks.Task:ExecutionContextCallback(Object)
+System.Security.SecurityContext:Run(SecurityContext, ContextCallback, Object)
+System.Threading.ExecutionContext:Run(ExecutionContext, ContextCallback, Object)
+System.Threading.Tasks.Task:ExecuteWithThreadLocal(Task&)
+System.Threading.Tasks.Task:ExecuteEntry(Boolean)
+System.Threading.Tasks.ThreadPoolTaskScheduler:TaskExecuteWaitCallback(Object)
+??

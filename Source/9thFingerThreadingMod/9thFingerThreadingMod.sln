@@ -4,10 +4,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "9thFingerThreadingMod", "9thFingerThreadingMod.csproj", "{550B0EFC-03FC-4D81-BDD8-AE70ABE33FCD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{69AEE16A-B6E7-4642-8081-3928B32455DF} = {69AEE16A-B6E7-4642-8081-3928B32455DF}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harmony", "..\..\..\..\..\..\..\..\..\Users\Joseph\Desktop\Modding\Harmony\Harmony\Harmony.csproj", "{69AEE16A-B6E7-4642-8081-3928B32455DF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RimStuffs", "..\..\..\..\..\..\..\..\..\Users\Joseph\Desktop\Modding\B18 Build Decomp\RimStuffs.csproj", "{EDDEB990-8CC5-4B7E-A2E5-CC83CA65A225}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Diagnostics.Runtime", "..\..\..\..\..\..\..\..\..\Users\Joseph\Desktop\Modding\RuntimeStuffs\Microsoft.Diagnostics.Runtime.csproj", "{9D81A14A-2AA2-445B-B197-DDB14C32AA3F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,9 +29,10 @@ Global
 		{69AEE16A-B6E7-4642-8081-3928B32455DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69AEE16A-B6E7-4642-8081-3928B32455DF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EDDEB990-8CC5-4B7E-A2E5-CC83CA65A225}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EDDEB990-8CC5-4B7E-A2E5-CC83CA65A225}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDDEB990-8CC5-4B7E-A2E5-CC83CA65A225}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EDDEB990-8CC5-4B7E-A2E5-CC83CA65A225}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D81A14A-2AA2-445B-B197-DDB14C32AA3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D81A14A-2AA2-445B-B197-DDB14C32AA3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D81A14A-2AA2-445B-B197-DDB14C32AA3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

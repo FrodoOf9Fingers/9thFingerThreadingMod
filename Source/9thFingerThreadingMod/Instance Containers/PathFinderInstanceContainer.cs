@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Harmony;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using Verse;
@@ -25,6 +26,16 @@ namespace _9thFingerThreadingMod
         private Dictionary<String, EventWaitHandle> findersBusy = new Dictionary<String, EventWaitHandle>();
         private EventWaitHandle addingFinders = new EventWaitHandle(true, EventResetMode.AutoReset);
 
+        private static readonly object _syncObject = new object();
+
+        public void refreshFinders()
+        {
+            finders = new Dictionary<String, newPathFinder[]>();
+            numBusyFinders = new Dictionary<String, int>();
+            busyFinders = new Dictionary<String, bool[]>();
+            findersBusy = new Dictionary<String, EventWaitHandle>();
+            addingFinders = new EventWaitHandle(true, EventResetMode.AutoReset);
+        }
 
         public newPathFinder requestFinder(String index, ref int ticket, Map map)
         {
@@ -35,7 +46,6 @@ namespace _9thFingerThreadingMod
                     InitializeNewMapFinders(index, map);
                 addingFinders.Set();
             }
-
             findersBusy[index].WaitOne();
             numBusyFinders[index]++;
             if (numBusyFinders[index] >= ThreadingMod.NUM_THREADS_PER_MAP)
@@ -48,12 +58,37 @@ namespace _9thFingerThreadingMod
         {
             if (ticket < 0 || ticket > ThreadingMod.NUM_THREADS_PER_MAP)
                 throw new Exception("Invalid finder ticket");
-
-            busyFinders[index][ticket] = false;
-            numBusyFinders[index]--;
+            try
+            {
+                busyFinders[index][ticket] = false;
+                numBusyFinders[index]--;
+            }
+            catch (Exception e)
+            {
+                Log.Message("Key not found in Pathfinder Container: " + index);
+            }
             if (numBusyFinders[index] < ThreadingMod.NUM_THREADS_PER_MAP)
                 findersBusy[index].Set();
             return;
+        }
+
+        private newPathFinder SelectFinder(String index, ref int ticket)
+        {
+            newPathFinder reachability = null;
+            lock (_syncObject)
+            {
+                for (int i = 0; i < ThreadingMod.NUM_THREADS_PER_MAP; i++)
+                {
+                    if (busyFinders[index][i] == false)
+                    {
+                        busyFinders[index][i] = true;
+                        reachability = finders[index][i];
+                        ticket = i;
+                        break;
+                    }
+                }
+            }
+            return reachability;
         }
 
         private void InitializeNewMapFinders(String index, Map map)
@@ -68,22 +103,6 @@ namespace _9thFingerThreadingMod
             numBusyFinders.Add(index, 0);
             busyFinders.Add(index, new bool[ThreadingMod.NUM_THREADS_PER_MAP]);
             findersBusy.Add(index, new EventWaitHandle(true, EventResetMode.ManualReset));
-        }
-
-        private newPathFinder SelectFinder(String index, ref int ticket)
-        {
-            newPathFinder reachability = null;
-            for (int i = 0; i < ThreadingMod.NUM_THREADS_PER_MAP; i++)
-            {
-                if (busyFinders[index][i] == false)
-                {
-                    busyFinders[index][i] = true;
-                    reachability = finders[index][i];
-                    ticket = i;
-                    break;
-                }
-            }
-            return reachability;
         }
     }
 }

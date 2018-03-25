@@ -16,6 +16,15 @@ namespace _9thFingerThreadingMod
             newPathFinder finder = PathFinderInstanceContainer.GetInstance().requestFinder(index, ref ticket, map);
             var val = finder.FindPath(start, dest, traverseParms, peMode);
             PathFinderInstanceContainer.GetInstance().CheckInFinder(index, ticket);
+            try
+            {
+                var someVal = val.LastNode;
+            }
+            catch (System.Exception)
+            {
+                Log.Message("Tried to return a path without an end.... ???");
+                return PawnPath.NotFound;
+            }
             return val;
         }
     }

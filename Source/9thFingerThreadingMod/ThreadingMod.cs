@@ -1,4 +1,5 @@
-﻿using _9thFingerThreadingMod.Replacement_Functions;
+﻿using _9thFingerThreadingMod.Patches;
+using _9thFingerThreadingMod.Replacement_Functions;
 using Harmony;
 using Harmony.ILCopying;
 using HugsLib;
@@ -6,9 +7,13 @@ using RimWorld;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
+using UnityEngine;
 using Verse;
+using Verse.AI;
+using System.Runtime.CompilerServices;
 
 namespace _9thFingerThreadingMod
 {
@@ -16,25 +21,27 @@ namespace _9thFingerThreadingMod
     {
         public const int NUM_THREADS_PER_MAP = 8;
         public override string ModIdentifier => "threadingmod";
+        protected override bool HarmonyAutoPatch { get { return false; } }
+        HarmonyInstance harmony;
+        public static int mainThreadId;
 
         ThreadingMod()
         {
-            ThreadingMod.Prepare();
-            Log.Message("Initialized Threading Mod");
+            mainThreadId = (int)typeof(UnityData).GetField("mainThreadId", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+            harmony = HarmonyInstance.Create("9thFingerThreadingMod");
+            Prepare();
+            doManualPatches();
+            harmony.PatchAll(Assembly.GetExecutingAssembly());
         }
 
         public override void DefsLoaded()
         {
             ConstructorInfo constructor = typeof(RegionTraverser).GetConstructor(BindingFlags.Static | BindingFlags.NonPublic, null, new Type[0], null);
             constructor.Invoke(null, null);
-
             var obj = typeof(RegionTraverser).GetField("freeWorkers", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
-
-            FileLog.Log("Num items: " + obj.GetType().GetProperty("Count").GetValue(obj, null).ToString());
-            FileLog.Log("num workers: " + RegionTraverser.NumWorkers.ToString());
         }
-
-        public static bool Prepare()
+        
+        public bool Prepare()
         {
             Log.Message("Thread Mod Function Replacement Started");
             FunctionReplacer.ReplacePathfinderFunctions();
@@ -44,9 +51,12 @@ namespace _9thFingerThreadingMod
             FunctionReplacer.replaceRegionTraverser();
             Memory.WriteJump(Memory.GetMethodStart(typeof(RCellFinder).GetMethod("RandomWanderDestFor")),
                     Memory.GetMethodStart(typeof(RCellFinderFuncionHolder).GetMethod("newRandomWanderDestFor")));
-
-            Log.Message("Thread Mod Function Replacement Complete");
             return true;
+        }
+
+        public void doManualPatches()
+        {
+
         }
     }
 }

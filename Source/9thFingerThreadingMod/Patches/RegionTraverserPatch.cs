@@ -21,15 +21,12 @@ namespace _9thFingerThreadingMod
         [HarmonyTranspiler]
         static IEnumerable<CodeInstruction> increaseNumWorkers(IEnumerable<CodeInstruction> instr)
         {
-            FileLog.Log("tempPatch");
             foreach (CodeInstruction ci in instr)
             {
                 if(ci.opcode == OpCodes.Ldc_I4_8)
                 {
-                    FileLog.Log(ci.ToString());
                     ci.opcode = OpCodes.Ldc_I4;
                     ci.operand = 8 * ThreadingMod.NUM_THREADS_PER_MAP * 2;
-                    FileLog.Log(ci.ToString());
                 }  
             }
             return instr;
