@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Verse;
 
 namespace _9thFingerThreadingMod.Patches
@@ -16,7 +17,6 @@ namespace _9thFingerThreadingMod.Patches
             [HarmonyPrefix]
             public static bool prefix(int __methodId, object[] __params, object __instance, ref object __result)
             {
-                //FileLog.Log("get_AllThings");
                 return UpdateLoopBlockers.ObjectBlockInstance(__methodId, __params, __instance, ref __result);
             }
         }
@@ -27,7 +27,6 @@ namespace _9thFingerThreadingMod.Patches
             [HarmonyPrefix]
             public static bool prefix(int __methodId, object[] __params, object __instance)
             {
-                //FileLog.Log("Remove");
                 return UpdateLoopBlockers.ObjectBlockInstance(__methodId, __params, __instance);
             }
         }
@@ -38,54 +37,21 @@ namespace _9thFingerThreadingMod.Patches
             [HarmonyPrefix]
             public static bool prefix(int __methodId, object[] __params, object __instance)
             {
-                //FileLog.Log("Add");
                 return UpdateLoopBlockers.ObjectBlockInstance(__methodId, __params, __instance);
             }
         }
 
-        [HarmonyPatch(typeof(ListerThings), "Contains", new Type[] { typeof(Thing) })]
+        /* Currently prevents proper startup of the game. I failed in diagnosising the issue.
+         * 
+         * [HarmonyPatch(typeof(ListerThings), "Contains", new Type[] { typeof(Thing) })]
         class ListerThingsContains
         {
             [HarmonyPrefix]
             public static bool prefix(int __methodId, object[] __params, object __instance, ref object __result)
             {
-                FileLog.Log("Contains State: ");
-                try
-                {
-                    FileLog.Log(__methodId.ToString());
-                }
-                catch
-                {
-                    FileLog.Log("methodId Null!");
-                }
-                try
-                {
-                    FileLog.Log(__params[0].ToString());
-                }
-                catch
-                {
-                    FileLog.Log("__params Null!");
-                }
-                try
-                {
-                    FileLog.Log(__instance.ToString());
-                }
-                catch
-                {
-                    FileLog.Log("__instance Null!");
-                }
-                try
-                {
-                    FileLog.Log(__result.ToString());
-                }
-                catch
-                {
-                    FileLog.Log("__result Null!");
-                }
-                FileLog.Log("\n");
                 return UpdateLoopBlockers.ObjectBlockInstance(__methodId, __params, __instance, ref __result);
             }
-        }
+        }*/
 
         [HarmonyPatch(typeof(ListerThings), "ThingsMatching", new Type[] { typeof(ThingRequest) })]
         class ListerThingsMatching
@@ -93,7 +59,6 @@ namespace _9thFingerThreadingMod.Patches
             [HarmonyPrefix]
             public static bool prefix(int __methodId, object[] __params, object __instance, ref object __result)
             {
-                //FileLog.Log("ThingsMatching");
                 return UpdateLoopBlockers.ObjectBlockInstance(__methodId, __params, __instance, ref __result);
             }
         }
@@ -104,7 +69,6 @@ namespace _9thFingerThreadingMod.Patches
             [HarmonyPrefix]
             public static bool prefix(int __methodId, object[] __params, object __instance, ref object __result)
             {
-                //FileLog.Log("ThingsOfDef");
                 return UpdateLoopBlockers.ObjectBlockInstance(__methodId, __params, __instance, ref __result);
             }
         }
@@ -115,7 +79,6 @@ namespace _9thFingerThreadingMod.Patches
             [HarmonyPrefix]
             public static bool prefix(int __methodId, object[] __params, object __instance, ref object __result)
             {
-                //FileLog.Log("ThingsInGroup");
                 return UpdateLoopBlockers.ObjectBlockInstance(__methodId, __params, __instance, ref __result);
             }
         }

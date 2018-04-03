@@ -19,7 +19,7 @@ namespace _9thFingerThreadingMod
 {
     public class ThreadingMod : ModBase
     {
-        public const int NUM_THREADS_PER_MAP = 8;
+        public const int NUM_THREADS_PER_MAP = 16;
         public override string ModIdentifier => "threadingmod";
         protected override bool HarmonyAutoPatch { get { return false; } }
         HarmonyInstance harmony;
@@ -46,7 +46,6 @@ namespace _9thFingerThreadingMod
             Log.Message("Thread Mod Function Replacement Started");
             FunctionReplacer.ReplacePathfinderFunctions();
             FunctionReplacer.ReplaceReachabilityFunctions();
-            FunctionReplacer.ReplaceListerThings();
             FunctionReplacer.ReplaceRegionListers();
             FunctionReplacer.replaceRegionTraverser();
             Memory.WriteJump(Memory.GetMethodStart(typeof(RCellFinder).GetMethod("RandomWanderDestFor")),

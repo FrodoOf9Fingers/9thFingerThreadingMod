@@ -98,7 +98,7 @@ namespace _9thFingerThreadingMod
 
         public static void ReplaceRegionListers()
         {
-            Memory.WriteJump(Memory.GetMethodStart(typeof(RegionListersUpdater).GetMethod("DeregisterInRegions", new Type[] { typeof(Thing), typeof(Map) })),
+            /*Memory.WriteJump(Memory.GetMethodStart(typeof(RegionListersUpdater).GetMethod("DeregisterInRegions", new Type[] { typeof(Thing), typeof(Map) })),
                     Memory.GetMethodStart(typeof(RegionListersUpdaterFunctionHolder).GetMethod("hijackDeregisterInRegions")));
 
             Memory.WriteJump(Memory.GetMethodStart(typeof(RegionListersUpdater).GetMethod("RegisterInRegions", new Type[] { typeof(Thing), typeof(Map) })),
@@ -108,35 +108,7 @@ namespace _9thFingerThreadingMod
         Memory.GetMethodStart(typeof(RegionListersUpdaterFunctionHolder).GetMethod("hijackRegisterAllAt")));
 
             Memory.WriteJump(Memory.GetMethodStart(typeof(RegionListersUpdater).GetMethod("GetTouchableRegions", new Type[] { typeof(Thing), typeof(Map), typeof(List<Region>), typeof(bool) })),
-        Memory.GetMethodStart(typeof(RegionListersUpdaterFunctionHolder).GetMethod("hijackGetTouchableRegions")));
-        }
-
-        public static void ReplaceListerThings()
-        {
-            /*Memory.WriteJump(Memory.GetMethodStart(typeof(ListerThings).GetMethod("get_AllThings")),
-                                Memory.GetMethodStart(typeof(ListerThingsFunctionHolder).GetMethod("hijackAllThings")));
-
-            Memory.WriteJump(Memory.GetMethodStart(typeof(ListerThings).GetMethod("EverListable", new Type[] { typeof(ThingDef), typeof(ListerThingsUse) })),
-                                Memory.GetMethodStart(typeof(ListerThingsFunctionHolder).GetMethod("hijackEverListable")));
-
-            Memory.WriteJump(Memory.GetMethodStart(typeof(ListerThings).GetMethod("Remove", new Type[] { typeof(Thing) })),
-                                Memory.GetMethodStart(typeof(ListerThingsFunctionHolder).GetMethod("hijackRemove")));
-
-            Memory.WriteJump(Memory.GetMethodStart(typeof(ListerThings).GetMethod("Add", new Type[] { typeof(Thing) })),
-                                Memory.GetMethodStart(typeof(ListerThingsFunctionHolder).GetMethod("hijackAdd")));
-
-            Memory.WriteJump(Memory.GetMethodStart(typeof(ListerThings).GetMethod("Contains", new Type[] { typeof(Thing) })),
-                                Memory.GetMethodStart(typeof(ListerThingsFunctionHolder).GetMethod("hijackContains")));
-
-            Memory.WriteJump(Memory.GetMethodStart(typeof(ListerThings).GetMethod("ThingsMatching", new Type[] { typeof(ThingRequest) })),
-                                Memory.GetMethodStart(typeof(ListerThingsFunctionHolder).GetMethod("hijackThingsMatching")));
-
-            Memory.WriteJump(Memory.GetMethodStart(typeof(ListerThings).GetMethod("ThingsOfDef", new Type[] { typeof(ThingDef) })),
-                                Memory.GetMethodStart(typeof(ListerThingsFunctionHolder).GetMethod("hijackThingsOfDef")));
-
-            Memory.WriteJump(Memory.GetMethodStart(typeof(ListerThings).GetMethod("ThingsInGroup", new Type[] { typeof(ThingRequestGroup) })),
-                                Memory.GetMethodStart(typeof(ListerThingsFunctionHolder).GetMethod("hijackThingsInGroup")));*/
-
+        Memory.GetMethodStart(typeof(RegionListersUpdaterFunctionHolder).GetMethod("hijackGetTouchableRegions")));*/
         }
 
         public static void ReplaceReachabilityFunctions()

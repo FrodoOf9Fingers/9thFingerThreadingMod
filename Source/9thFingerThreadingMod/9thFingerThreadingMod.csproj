@@ -60,10 +60,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Patches\RegionListersUpdaterPatch.cs" />
     <Compile Include="Patches\ListerThingsPatch.cs" />
     <Compile Include="Patches\PawnUtilityPatch.cs" />
     <Compile Include="Patches\Pawn_WorkSettingsPatch.cs" />
-    <Compile Include="Patches\ManualPatches\ThingOwnerPatch.cs" />
     <Compile Include="Patches\RealtimeMoteListPatch.cs" />
     <Compile Include="Patches\RootPlayPatch.cs" />
     <Compile Include="Patches\ThingGridPatch.cs" />
@@ -80,14 +80,10 @@
     <Compile Include="Utilities\Blocker.cs" />
     <Compile Include="Utilities\DirtyConccurentQueue.cs" />
     <Compile Include="Utilities\ExpiringObjectMapper.cs" />
-    <Compile Include="Patches\ListerThingsPatches.cs" />
     <Compile Include="Patches\RegionTraverserPatch.cs" />
-    <Compile Include="Replacement Functions\ListerThingsFunctionHolder.cs" />
     <Compile Include="Replacement Functions\RCellFinderFuncionHolder.cs" />
     <Compile Include="Replacement Functions\ReachabilityFunctionHolder.cs" />
     <Compile Include="Utilities\FunctionReplacer.cs" />
-    <Compile Include="Replacement Objects\newListerThings.cs" />
-    <Compile Include="Replacement Objects\newMethodBodyReader.cs" />
     <Compile Include="Replacement Objects\newPathFinder.cs" />
     <Compile Include="Replacement Functions\PathFinderFunctionHolder.cs" />
     <Compile Include="Instance Containers\PathFinderInstanceContainer.cs" />

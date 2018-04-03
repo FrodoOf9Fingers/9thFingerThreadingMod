@@ -32,7 +32,7 @@ namespace _9thFingerThreadingMod.Utilities
         private readonly static object defaultReference = new object();
 
 
-        public static bool forceMainThreadPrePatch(int __methodId, ref object __result, System.Object[] __params)
+        public static bool forceMainThreadPrePatch(int __methodId, ref object __result, System.Object[] __params, Object target = null)
         {
             // Check if this thread is the main thread, if it is, bypass. Else, call to main thread.
             if (Thread.CurrentThread.ManagedThreadId == ThreadingMod.mainThreadId)
@@ -41,7 +41,7 @@ namespace _9thFingerThreadingMod.Utilities
             if (__params == null || __params.Length == 0)
                 __params = null;
 
-            Job job = new Job(delegate { return (System.Object)HarmonyInstance.getMethodBody(__methodId).Invoke(null, __params); });
+            Job job = new Job(delegate { return (System.Object)HarmonyInstance.getMethodBody(__methodId).Invoke(target, __params); });
             TickThreadPatch.mainThreadJobs.Enqueue(job);
 
             while (!job.isDone)
@@ -53,13 +53,13 @@ namespace _9thFingerThreadingMod.Utilities
             return false;
         }
 
-        public static bool forceMainThreadPrePatch(int __methodId)
+        public static bool forceMainThreadPrePatch(int __methodId, System.Object[] __params, Object target = null)
         {
             // Check if this thread is the main thread, if it is, bypass. Else, call to main thread.
             if (Thread.CurrentThread.ManagedThreadId == ThreadingMod.mainThreadId)
                 return true;
 
-            Job job = new Job(delegate { return (System.Object)HarmonyInstance.getMethodBody(__methodId).Invoke(null, null); });
+            Job job = new Job(delegate { return (System.Object)HarmonyInstance.getMethodBody(__methodId).Invoke(target, null); });
             TickThreadPatch.mainThreadJobs.Enqueue(job);
 
             while (!job.isDone)
@@ -70,52 +70,48 @@ namespace _9thFingerThreadingMod.Utilities
             return false;
         }
 
-        public static bool ObjectBlockInstance(int __methodId, object[] __params, object __instance, bool isGeneric = false)
+        public static bool ObjectBlockInstance(int __methodId, object[] __params, object locker)
         {
             object obj = null;
-            return ObjectBlockInstance(HarmonyInstance.getMethodBody(__methodId), __params, __instance, ref obj, isGeneric);
+            return ObjectBlockInstance(HarmonyInstance.getMethodBody(__methodId), __params, locker, ref obj);
         }
 
-        public static bool ObjectBlockInstance(MethodBase method, object[] __params, object __instance, bool isGeneric = false)
+        public static bool ObjectBlockInstance(MethodBase method, object[] __params, object locker)
         {
             object obj = null;
-            return ObjectBlockInstance(method, __params, __instance, ref obj, isGeneric);
+            return ObjectBlockInstance(method, __params, locker, ref obj);
         }
 
-        public static bool ObjectBlockInstance(int __methodId, object[] __params, object __instance, ref object result, bool isGeneric = false)
+        public static bool ObjectBlockInstance(int __methodId, object[] __params, object locker, ref object result)
         {
-            return ObjectBlockInstance(HarmonyInstance.getMethodBody(__methodId), __params, __instance, ref result, isGeneric);
+            return ObjectBlockInstance(HarmonyInstance.getMethodBody(__methodId), __params, locker, ref result);
         }
 
-        public static bool ObjectBlockInstance(MethodBase method, object[] __params, object __instance, ref object result, bool isGeneric = false)
+        public static bool ObjectBlockInstance(MethodBase method, object[] __params, object locker, ref object result)
         {
-            if (!Waiters.ContainsKey(__instance))
-                Waiters.TryAdd(__instance, new WhoWaiter());
+            if (!Waiters.ContainsKey(locker))
+                Waiters.TryAdd(locker, new WhoWaiter());
 
             //If the thread entering is order 2, allow to pass
-            if (Thread.CurrentThread.ManagedThreadId == Waiters[__instance].getWho())
+            if (Thread.CurrentThread.ManagedThreadId == Waiters[locker].getWho())
                 return true;
 
             //If the thread entering is order 1, wait for object, then proceed to order 2.  
-            Waiters[__instance].waiter.WaitOne();
-            Waiters[__instance].setWho(Thread.CurrentThread.ManagedThreadId);
+            Waiters[locker].waiter.WaitOne();
+            Waiters[locker].setWho(Thread.CurrentThread.ManagedThreadId);
 
-            MethodInfo mi;
-            if (isGeneric)
-            {
-                mi = ((MethodInfo) method).MakeGenericMethod(__instance.GetType().GetGenericArguments());
-            }
-            else
-            {
-                mi = (MethodInfo) method;
-            }
+            MethodInfo mi = (MethodInfo) method;
+            object instance = null;
+            if (!mi.IsStatic)
+                instance = locker;
+
             if (mi.ReturnType != typeof(void))
-                result = mi.Invoke(__instance, __params);
+                result = mi.Invoke(instance, __params);
             else
-                mi.Invoke(__instance, __params);
+                mi.Invoke(instance, __params);
 
-            Waiters[__instance].setWho(-1);
-            Waiters[__instance].waiter.Set();
+            Waiters[locker].setWho(-1);
+            Waiters[locker].waiter.Set();
             return false;
         }
     }

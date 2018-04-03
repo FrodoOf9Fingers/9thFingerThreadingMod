@@ -18,9 +18,9 @@ namespace _9thFingerThreadingMod.Patches
         static class MatFromPatch
         {
             [HarmonyPrefix]
-            public static bool prefix(int __methodId)
+            public static bool prefix(int __methodId, object[] __params)
             {
-                return UpdateLoopBlockers.forceMainThreadPrePatch(__methodId);
+                return UpdateLoopBlockers.forceMainThreadPrePatch(__methodId, __params);
             }
         }
 
@@ -39,9 +39,9 @@ namespace _9thFingerThreadingMod.Patches
         class AudioSourcePatch
         {
             [HarmonyPrefix]
-            public static bool prefix(int __methodId)
+            public static bool prefix(int __methodId, object[] __params, object __instance)
             {
-                return UpdateLoopBlockers.forceMainThreadPrePatch(__methodId);
+                return UpdateLoopBlockers.forceMainThreadPrePatch(__methodId, __params, __instance);
             }
         }
 

@@ -13,7 +13,7 @@ namespace _9thFingerThreadingMod
 {
     static class Playground
     {
-        [HarmonyPatch(typeof(Map), "ExposeData", new Type[] { })]
+        /*[HarmonyPatch(typeof(Map), "ExposeData", new Type[] { })]
         class RandomStatePopPatch
         {
             [HarmonyPrefix]
@@ -25,5 +25,41 @@ namespace _9thFingerThreadingMod
                 return true;
             }
         }
+
+        [HarmonyPatch(typeof(DeepProfiler), "Start")]
+        class test3
+        {
+            [HarmonyPrefix]
+            public static bool prefix(String label)
+            {
+                Log.Message("Profiler Debug: " + label);
+                return true;
+            }
+        }
+
+        [HarmonyPatch(typeof(DeepProfiler), "End")]
+        class test4
+        {
+            [HarmonyPrefix]
+            public static bool prefix()
+            {
+                Log.Message("Profiler end");
+                return true;
+            }
+        }
+
+        /*[HarmonyPatch(typeof(RegionAndRoomUpdater), "RebuildAllRegionsAndRooms")]
+        class test6
+        {
+            static int testing = 0;
+            [HarmonyPrefix]
+            public static void prefix()
+            {
+                    testing++;
+                    FileLog.Log("Rebuild All Regions " + testing.ToString() + " " + Thread.CurrentThread.ManagedThreadId.ToString());
+                if (testing > 1)
+                    throw new Exception();
+            }
+        }*/
     }
 }
