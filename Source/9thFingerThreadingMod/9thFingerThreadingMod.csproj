@@ -60,6 +60,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Patches\Manual Patches\ThingOwnerPatches.cs" />
+    <Compile Include="Patches\PhysicalInteractionReservationManagerPatch.cs" />
     <Compile Include="Patches\RegionListersUpdaterPatch.cs" />
     <Compile Include="Patches\ListerThingsPatch.cs" />
     <Compile Include="Patches\PawnUtilityPatch.cs" />
@@ -67,12 +69,12 @@
     <Compile Include="Patches\RealtimeMoteListPatch.cs" />
     <Compile Include="Patches\RootPlayPatch.cs" />
     <Compile Include="Patches\ThingGridPatch.cs" />
+    <Compile Include="Patches\ThingOwnerPatch.cs" />
     <Compile Include="Patches\UnityInterfacePatches.cs" />
     <Compile Include="Patches\PrioritySorterPatch.cs" />
     <Compile Include="Patches\RandomStatePatch.cs" />
     <Compile Include="Patches\SustainerManagerPatch.cs" />
     <Compile Include="Playground.cs" />
-    <Compile Include="Replacement Functions\RegionListersUpdaterFunctionHolder.cs" />
     <Compile Include="Replacement Functions\RegionTraverserFunctionHolder.cs" />
     <Compile Include="Replacement Objects\newRegionListersUpdater.cs" />
     <Compile Include="Replacement Objects\newRegionTraverser.cs" />

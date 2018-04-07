@@ -26,7 +26,6 @@ namespace _9thFingerThreadingMod.Replacement_Functions
             {
                 if (ticket != -1 && !index.NullOrEmpty())
                     ReachabilityInstanceContrainer.GetInstance().CheckInReacher(index, ticket);
-                Harmony.FileLog.Log(e.ToString());
                 throw e;
             }
         }
@@ -50,7 +49,6 @@ namespace _9thFingerThreadingMod.Replacement_Functions
             {
                 if (ticket != -1 && !index.NullOrEmpty())
                     ReachabilityInstanceContrainer.GetInstance().CheckInReacher(index, ticket);
-                Harmony.FileLog.Log(e.ToString());
                 throw e;
             }
         }
@@ -74,7 +72,6 @@ namespace _9thFingerThreadingMod.Replacement_Functions
             {
                 if (ticket != -1 && !index.NullOrEmpty())
                     ReachabilityInstanceContrainer.GetInstance().CheckInReacher(index, ticket);
-                Harmony.FileLog.Log(e.ToString());
                 throw e;
             }
         }
@@ -97,7 +94,6 @@ namespace _9thFingerThreadingMod.Replacement_Functions
             {
                 if (ticket != -1 && !index.NullOrEmpty())
                     ReachabilityInstanceContrainer.GetInstance().CheckInReacher(index, ticket);
-                Harmony.FileLog.Log(e.ToString());
                 throw e;
             }
         }
@@ -120,7 +116,6 @@ namespace _9thFingerThreadingMod.Replacement_Functions
             {
                 if (ticket != -1 && !index.NullOrEmpty())
                     ReachabilityInstanceContrainer.GetInstance().CheckInReacher(index, ticket);
-                Harmony.FileLog.Log(e.ToString());
                 throw e;
             }
         }
@@ -142,7 +137,6 @@ namespace _9thFingerThreadingMod.Replacement_Functions
             {
                 if (ticket != -1 && !index.NullOrEmpty())
                     ReachabilityInstanceContrainer.GetInstance().CheckInReacher(index, ticket);
-                Harmony.FileLog.Log(e.ToString());
                 throw e;
             }
         }

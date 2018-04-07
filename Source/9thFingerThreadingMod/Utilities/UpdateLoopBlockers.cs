@@ -43,11 +43,12 @@ namespace _9thFingerThreadingMod.Utilities
 
             Job job = new Job(delegate { return (System.Object)HarmonyInstance.getMethodBody(__methodId).Invoke(target, __params); });
             TickThreadPatch.mainThreadJobs.Enqueue(job);
+            TickThreadPatch.loopPauser.Set();
 
             while (!job.isDone)
             { }
             if (job.exception != null)
-                FileLog.Log(job.exception.ToString());
+                Log.Error(job.exception.ToString());
             __result = job.result;
 
             return false;
@@ -59,13 +60,14 @@ namespace _9thFingerThreadingMod.Utilities
             if (Thread.CurrentThread.ManagedThreadId == ThreadingMod.mainThreadId)
                 return true;
 
-            Job job = new Job(delegate { return (System.Object)HarmonyInstance.getMethodBody(__methodId).Invoke(target, null); });
+            Job job = new Job(delegate { return (System.Object)HarmonyInstance.getMethodBody(__methodId).Invoke(target, __params); });
             TickThreadPatch.mainThreadJobs.Enqueue(job);
+            TickThreadPatch.loopPauser.Set();
 
             while (!job.isDone)
             { }
             if (job.exception != null)
-                FileLog.Log(job.exception.ToString());
+                Log.Error(job.exception.ToString());
 
             return false;
         }
@@ -89,6 +91,8 @@ namespace _9thFingerThreadingMod.Utilities
 
         public static bool ObjectBlockInstance(MethodBase method, object[] __params, object locker, ref object result)
         {
+            if (method == null)
+                throw new ArgumentException("Method may not be null!");
             if (!Waiters.ContainsKey(locker))
                 Waiters.TryAdd(locker, new WhoWaiter());
 

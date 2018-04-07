@@ -43,7 +43,6 @@ namespace _9thFingerThreadingMod
         
         public bool Prepare()
         {
-            Log.Message("Thread Mod Function Replacement Started");
             FunctionReplacer.ReplacePathfinderFunctions();
             FunctionReplacer.ReplaceReachabilityFunctions();
             FunctionReplacer.ReplaceRegionListers();

@@ -16,6 +16,8 @@ namespace _9thFingerThreadingMod
     static class TickThreadPatch
     {
         static bool loopDone = false;
+        static public EventWaitHandle loopPauser = new EventWaitHandle(true, EventResetMode.ManualReset);
+
         //Rimworld crashes if I use a Queue
         public static DirtyConccurentQueue<Job> mainThreadJobs = new DirtyConccurentQueue<Job>();
 
@@ -27,10 +29,6 @@ namespace _9thFingerThreadingMod
             return false;
         }
 
-        public static void dumpThreadStacks()
-        {
-            
-        }
 
         public static void TickDetour(TickList __instance)
         {
@@ -80,6 +78,8 @@ namespace _9thFingerThreadingMod
                 Thread t = new Thread(new ParameterizedThreadStart(mainUpdateLoop));
                 t.Start(new WorkSet(list2, tickt, __instance));
 
+                
+
                 TimeSpan timeout = TimeSpan.FromSeconds(30);
                 DateTime start_time = DateTime.Now;
 
@@ -92,11 +92,17 @@ namespace _9thFingerThreadingMod
                         if (job != null)
                             job.doJob();
                     }
+                    else
+                    {
+                        loopPauser.WaitOne();
+                        loopPauser.Reset();
+                    }
+
+                    //Debug Only Code
                     if ((DateTime.Now - start_time) > timeout)
                     {
                         t.Abort();
                         throw new Exception("Threads needed to be aborted");
-                        break;
                     }
                 }
                 loopDone = false;
@@ -159,6 +165,7 @@ namespace _9thFingerThreadingMod
             });
 
             loopDone = true;
+            loopPauser.Set();
         }
 
         private static int TickInterval(TickerType type)
